@@ -13,7 +13,13 @@ import { getStoreById, saveStore, updateStore } from "@/services/store";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function StoreModal({ open, onClose, id, onSuccess }) {
+export default function StoreModal({
+  open,
+  onClose,
+  id,
+  onSuccess,
+  entityType = "Store",
+}) {
   const {
     register,
     handleSubmit,
@@ -24,7 +30,7 @@ export default function StoreModal({ open, onClose, id, onSuccess }) {
       grab_store_code: "",
       parent_store_code: "",
       store_code: "",
-      name : "",
+      name: "",
       is_active: "",
     },
   });
@@ -47,56 +53,51 @@ export default function StoreModal({ open, onClose, id, onSuccess }) {
         parent_store_code: "",
         store_code: "",
         is_active: "",
-        name : "",
+        name: "",
       });
     }
   }, [id, reset]);
 
-
-
   const onSubmit = async (data) => {
     try {
-      let message;
-  
-      // Use data directly without payload
       if (id) {
-        message = await updateStore(id, data); // Use data directly for update
+        await updateStore(id, data);
       } else {
-        message = await saveStore(data); // Use data directly for save
+        await saveStore(data);
       }
-  
-      // Success toast
-      toast("Store saved successfully", {
-        description: "Your store details have been successfully saved.",
+
+      toast(`${entityType} saved successfully`, {
+        description: `Your ${entityType.toLowerCase()} details have been successfully saved.`,
       });
-  
+
       onSuccess();
       onClose();
     } catch (err) {
-      // Error toast
-      toast("Fetch Failed", {
-        description: err.message || "Failed to save store details. Please try again.",
+      toast("Operation Failed", {
+        description:
+          err.message ||
+          `Failed to save ${entityType.toLowerCase()} details. Please try again.`,
       });
     }
   };
-  
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-lg p-6">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-gray-800 dark:text-white">
-            {id ? "Edit Store" : "Add New Store"}
+            {id ? `Edit ${entityType}` : `Add New ${entityType}`}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 mt-4">
           <div className="grid gap-1">
             <Label htmlFor="grab_store_code" className="font-semibold mb-1">
-              Grab Store Code
+              Grab {entityType} Code
             </Label>
             <Input
               id="grab_store_code"
-              placeholder="Enter Grab Store Code"
+              placeholder={`Enter Grab ${entityType} Code`}
               {...register("grab_store_code", {
                 required: "This field is required",
               })}
@@ -156,9 +157,7 @@ export default function StoreModal({ open, onClose, id, onSuccess }) {
               })}
             />
             {errors.name && (
-              <p className="text-sm text-red-500">
-                {errors.name.message}
-              </p>
+              <p className="text-sm text-red-500">{errors.name.message}</p>
             )}
           </div>
 
@@ -171,7 +170,7 @@ export default function StoreModal({ open, onClose, id, onSuccess }) {
               {...register("is_active", { required: "This field is required" })}
               className="border border-input rounded-md p-2 text-sm"
             >
-              <option value={""}>-- Chosee --</option>
+              <option value={""}>-- Choose --</option>
               <option value={0}>Inactive</option>
               <option value={1}>Active</option>
             </select>

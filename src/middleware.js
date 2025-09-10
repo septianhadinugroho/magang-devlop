@@ -25,5 +25,5 @@ console.log(pathname);
 
 // Tentukan path yang ingin diberlakukan middleware
 export const config = {
-  matcher: ['/','/login','/register','/order','/store','/item','/category'], // Ganti dengan route yang ingin dilindungi
+  matcher: ['/','/login','/register','/order','/store','/item','/category', '/grabmart'], // Ganti dengan route yang ingin dilindungi
 };

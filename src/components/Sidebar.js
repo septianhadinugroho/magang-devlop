@@ -37,6 +37,7 @@ export default function Sidebar({ isSidebarOpen }) {
     { name: "Dashboard", icon: LayoutDashboard, href: "/" },
     { name: "Orders", icon: ShoppingBag, href: "/order" },
     { name: "Stores", icon: Store, href: "/store" },
+    { name: "GrabMart", icon: Store, href: "/grabmart" },
     { name: "Categories", icon: Component, href: "/category" },
     { name: "Items", icon: Package, href: "/item" },
     { name: "Logs", icon: ScrollText, href: "/log" },
