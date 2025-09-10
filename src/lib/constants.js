@@ -1,0 +1,69 @@
+export const CATEGORIES_STATUS = {
+  INACTIVE: 0,
+  ACTIVE: 1,
+};
+
+export const SYNC_PROFIT_STATUS_STORE = {
+  0: "INACTIVE",
+  1: "PENDING",
+  2: "PROCESS",
+  3: "SUCCESS",
+  4: "FAILED",
+};
+
+export const SYNC_GRAB_STATUS_STORE = {
+  0: "INACTIVE",
+  1: "PREPARE",
+  2: "READY_TO_SUBMIT",
+  3: "SUCCESS_SUBMIT",
+  4: "QUEUEING",
+  5: "PROCESSING",
+  6: "SUCCESS",
+  7: "FAILED",
+};
+
+export const SYNC_GRAB_STATUS_STORE_CODE = {
+   INACTIVE:0,
+   PREPARE:1,
+   READY_TO_SUBMIT:2,
+   SUCCESS_SUBMIT:3,
+  QUEUEING:4,
+  PROCESSING:5,
+   SUCCESS:6,
+   FAILED:7
+};
+
+
+
+
+export const ORDER_POS_STATUS_NUMBER = {
+  0: "SUBMIT",
+  1: "CHECKOUT",
+  2: "SEND TO POSREPO",
+};
+
+export const ORDER_STATE_STATUS_NUMBER = {
+  0: "PENDING",
+  1: "DRIVER_ALLOCATED",
+  2: "DRIVER_ARRIVED",
+  3: "COLLECTED",
+  4: "DELIVERED",
+};
+
+
+
+export const ORDER_STATE_STATUS = {
+    PENDING: 0,
+    DRIVER_ALLOCATED: 1,
+    DRIVER_ARRIVED: 2,
+    COLLECTED: 3,
+    DELIVERED: 4,
+  };
+
+  export const ORDER_POS_STATUS = {
+    SUBMIT: 0,
+    CHECKOUT: 1,
+    SEND_TO_POS_REPO: 2,
+  };
+  
+  
