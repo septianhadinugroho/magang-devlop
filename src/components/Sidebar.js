@@ -1,16 +1,79 @@
 "use client";
 
-import { LayoutDashboard, Package, Store, Component,ShoppingBag,ScrollText } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  Store,
+  Component,
+  ShoppingBag,
+  ScrollText,
+  ChevronDown,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
-// Komponen untuk item menu
-function MenuItemLink({ item, isActive }) {
+function MenuItemLink({ item, pathname }) {
   const Icon = item.icon;
+
+  // Cek apakah menu induk (yang punya anak) atau salah satu anaknya aktif
+  const isParentActive =
+    item.children && item.children.some((child) => pathname === child.href);
+
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(isParentActive);
+
+  // Buka submenu secara otomatis jika salah satu anaknya aktif saat navigasi
+  useEffect(() => {
+    if (isParentActive) {
+      setIsSubMenuOpen(true);
+    }
+  }, [pathname, isParentActive]);
+
+  if (item.children) {
+    return (
+      <div>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-3 px-4 py-2 text-sm font-medium rounded-lg cursor-pointer",
+            "transition-colors duration-200",
+            isParentActive
+              ? "bg-black text-white"
+              : "text-black hover:bg-gray-200 hover:text-black",
+            "focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          )}
+          onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
+        >
+          <div className="flex items-center gap-3">
+            <Icon className="h-5 w-5" />
+            {item.name}
+          </div>
+          <ChevronDown
+            className={`h-5 w-5 transition-transform ${
+              isSubMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </div>
+        {isSubMenuOpen && (
+          <div className="pl-8 space-y-1 mt-1">
+            {item.children.map((child) => (
+              <MenuItemLink
+                key={child.name}
+                item={child}
+                pathname={pathname}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const isActive = pathname === item.href;
+
   return (
     <Link
       href={item.href}
@@ -31,16 +94,26 @@ function MenuItemLink({ item, isActive }) {
 
 export default function Sidebar({ isSidebarOpen }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname(); // Panggil hook di sini, hanya sekali.
 
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/" },
-    { name: "Orders", icon: ShoppingBag, href: "/order" },
-    { name: "Stores", icon: Store, href: "/store" },
-    { name: "GrabMart", icon: Store, href: "/grabmart" },
-    { name: "Categories", icon: Component, href: "/category" },
-    { name: "Items", icon: Package, href: "/item" },
-    { name: "Logs", icon: ScrollText, href: "/log" },
+    {
+      name: "Grab Food Management",
+      icon: ShoppingBag,
+      children: [
+        { name: "Orders", icon: ShoppingBag, href: "/order" },
+        { name: "Stores", icon: Store, href: "/store" },
+        { name: "Categories", icon: Component, href: "/category" },
+        { name: "Items", icon: Package, href: "/item" },
+        { name: "Logs", icon: ScrollText, href: "/log" },
+      ],
+    },
+    {
+      name: "Grab Mart Management",
+      icon: Store,
+      children: [{ name: "Items", icon: Package, href: "/grabmart/item" }],
+    },
   ];
 
   const onLogout = () => {
@@ -68,7 +141,7 @@ export default function Sidebar({ isSidebarOpen }) {
             <MenuItemLink
               key={item.name}
               item={item}
-              isActive={pathname === item.href}
+              pathname={pathname} // Teruskan pathname sebagai prop
             />
           ))}
         </nav>

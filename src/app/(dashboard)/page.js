@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Package, Store, Component } from "lucide-react";
+import { Package, Store, Component, ShoppingBag } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartContainer,
@@ -33,7 +33,6 @@ import { countCategory } from "@/services/category";
 import { countItem } from "@/services/item";
 import { fetchSummaryOrders } from "@/services/order";
 import { fetchListJob } from "@/services/job";
-
 
 const COLORS = [
   "#2563eb", // Blue
@@ -68,11 +67,11 @@ export default function Home() {
 
   function formatDateTime(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   }
 
@@ -165,55 +164,82 @@ export default function Home() {
   return (
     <>
       <Card>
-        <div className="flex flex-col md:flex-row gap-4 px-3">
-          <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
-            <div className="w-[40%]">
-              <Component size={"70px"} />
-            </div>
-            <div className="w-[60%] flex flex-col gap-1 px-2">
-              <div className="w-full">
-                <h2 className="font-bold text-right text-4xl">
-                  {countData.category}
-                </h2>
+        <CardHeader>
+          <h1 className="text-2xl font-bold">Grab Food Management</h1>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col md:flex-row gap-4 px-3">
+            <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
+              <div className="w-[40%]">
+                <Component size={"70px"} />
               </div>
-              <div className="w-full text-right text-xl">TOTAL CATEGORY</div>
+              <div className="w-[60%] flex flex-col gap-1 px-2">
+                <div className="w-full">
+                  <h2 className="font-bold text-right text-4xl">
+                    {countData.category}
+                  </h2>
+                </div>
+                <div className="w-full text-right text-xl">TOTAL CATEGORY</div>
+              </div>
+            </div>
+            <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
+              <div className="w-[40%]">
+                <Store size={"70px"} />
+              </div>
+              <div className="w-[60%] flex flex-col gap-1 px-2">
+                <div className="w-full">
+                  <h2 className="font-bold text-right text-4xl">
+                    {countData.store}
+                  </h2>
+                </div>
+                <div className="w-full text-right text-xl">TOTAL STORE</div>
+              </div>
+            </div>
+            <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
+              <div className="w-[40%]">
+                <Package size={"70px"} />
+              </div>
+              <div className="w-[60%] flex flex-col gap-1 px-2">
+                <div className="w-full">
+                  <h2 className="font-bold text-right text-4xl">
+                    {countData.item}
+                  </h2>
+                </div>
+                <div className="w-full text-right text-xl">TOTAL ITEM</div>
+              </div>
             </div>
           </div>
-          <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
-            <div className="w-[40%]">
-              <Store size={"70px"} />
-            </div>
-            <div className="w-[60%] flex flex-col gap-1 px-2">
-              <div className="w-full">
-                <h2 className="font-bold text-right text-4xl">
-                  {countData.store}
-                </h2>
-              </div>
-              <div className="w-full text-right text-xl">TOTAL STORE</div>
-            </div>
-          </div>
-          <div className="w-full border flex flex-row bg-black text-white px-4 py-2 rounded-md">
-            <div className="w-[40%]">
-              <Package size={"70px"} />
-            </div>
-            <div className="w-[60%] flex flex-col gap-1 px-2">
-              <div className="w-full">
-                <h2 className="font-bold text-right text-4xl">
-                  {countData.item}
-                </h2>
-              </div>
-              <div className="w-full text-right text-xl">TOTAL ITEM</div>
-            </div>
-          </div>
-        </div>
+        </CardContent>
       </Card>
+
       <Card className="mt-5">
         <CardHeader>
-        <div className="flex justify-between items-center w-full">
-  <h1 className="text-xl font-bold">Job Monitoring</h1>
-  <h1 className="text-md text-gray-800 font-bold">{currentTime}</h1>
-</div>
-          
+          <h1 className="text-2xl font-bold">Grab Mart Management</h1>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col md:flex-row gap-4 px-3">
+            {/* Dummy Data for Grab Mart */}
+            <div className="w-full border flex flex-row bg-gray-500 text-white px-4 py-2 rounded-md">
+              <div className="w-[40%]">
+                <Package size={"70px"} />
+              </div>
+              <div className="w-[60%] flex flex-col gap-1 px-2">
+                <div className="w-full">
+                  <h2 className="font-bold text-right text-4xl">0</h2>
+                </div>
+                <div className="w-full text-right text-xl">TOTAL ITEM</div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mt-5">
+        <CardHeader>
+          <div className="flex justify-between items-center w-full">
+            <h1 className="text-xl font-bold">Job Monitoring</h1>
+            <h1 className="text-md text-gray-800 font-bold">{currentTime}</h1>
+          </div>
         </CardHeader>
         <CardContent>
           <Table>
@@ -225,7 +251,6 @@ export default function Home() {
                 <TableHead className="font-bold">Schedule</TableHead>
                 <TableHead className="font-bold">previous Schedule</TableHead>
                 <TableHead className="font-bold">Next Schedule</TableHead>
-               
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -269,7 +294,7 @@ export default function Home() {
       <Card className="mt-5">
         <CardHeader className="flex flex-col items-center gap-2 space-y-0 border-b py-5 md:flex-row">
           <div className="flex flex-col  gap-4 text-center sm:text-left w-full">
-            <CardTitle>Area Chart - Orders</CardTitle>
+            <CardTitle>Grab Food Orders Chart</CardTitle>
             <CardDescription>
               Showing total orders from {startDate} to {endDate}
             </CardDescription>
