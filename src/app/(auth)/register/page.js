@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
 import { registerUser } from "@/services/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -102,18 +104,27 @@ export default function Register() {
 
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="********"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters long",
-                  },
-                })}
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-sm text-red-500">
                   {errors.password.message}
@@ -123,16 +134,25 @@ export default function Register() {
 
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                placeholder="********"
-                {...register("confirmPassword", {
-                  required: "Confirm your password",
-                  validate: (value) =>
-                    value === watch("password") || "Passwords do not match",
-                })}
-              />
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="********"
+                  {...register("confirmPassword", {
+                    required: "Confirm your password",
+                    validate: (value) =>
+                      value === watch("password") || "Passwords do not match",
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  {showConfirmPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
               {errors.confirmPassword && (
                 <p className="text-sm text-red-500">
                   {errors.confirmPassword.message}
