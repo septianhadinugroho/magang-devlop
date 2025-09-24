@@ -1,3 +1,5 @@
+// src/components/Sidebar.js
+
 "use client";
 
 import {
@@ -112,7 +114,10 @@ export default function Sidebar({ isSidebarOpen }) {
     {
       name: "Grab Mart Management",
       icon: Store,
-      children: [{ name: "Items", icon: Package, href: "/grabmart/item" }],
+      children: [
+        { name: "Items", icon: Package, href: "/grabmart/item" },
+        { name: "Logs", icon: ScrollText, href: "/grabmart/logs" }, // Tambahkan ini
+      ],
     },
   ];
 
